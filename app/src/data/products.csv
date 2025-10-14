@@ -1,0 +1,11 @@
+code,name,description,stock,isDeleted
+P001,Caja,Caja de cartón,100,false
+P002,Bolsa,Bolsa plástica,200,false
+P003,Palet,Palet de madera,50,false
+P004,Contenedor,Contenedor metálico,30,false
+P005,Estiba,Estiba plástica,80,false
+P006,Cinta,Cinta adhesiva,300,false
+P007,Film,Film stretch,150,false
+P008,Etiqueta,Etiqueta adhesiva,500,false
+P009,Marcador,Marcador permanente,120,false
+P010,Guante,Guante de seguridad,250,false

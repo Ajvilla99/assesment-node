@@ -1,0 +1,11 @@
+name,isActive
+Bodega Central,true
+Bodega Norte,true
+Bodega Sur,false
+Bodega Este,true
+Bodega Oeste,true
+Bodega Andina,true
+Bodega Pacífico,false
+Bodega Atlántico,true
+Bodega Amazonía,true
+Bodega Llanos,true

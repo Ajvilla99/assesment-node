@@ -1,0 +1,3 @@
+username,email,password,role
+admin,admin@example.com,admin123,admin
+analyst,analyst@example.com,analyst123,analyst

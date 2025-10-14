@@ -1,4 +1,4 @@
-import { runAllSeeders } from '../seeders';
+import { runAllSeeders } from '../seeders/runAllSeeders';
 
 (async () => {
   await runAllSeeders();

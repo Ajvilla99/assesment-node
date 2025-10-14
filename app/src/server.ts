@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { setupSwagger } from './config/swagger';
-import { authRoutes } from './modules/auth';
+import { authRoutes } from './modules/user';
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(cors())
 // Aquí montas Swagger
 setupSwagger(app);
 
-app.use('api/auth', authRoutes)
+app.use('/api/auth', authRoutes);
 
 // export app
 export default app;
