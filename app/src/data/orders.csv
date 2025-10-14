@@ -1,0 +1,11 @@
+id,clientId,warehouseId,status
+1,1,1,pending
+2,2,2,in_transit
+3,3,3,delivered
+4,4,4,pending
+5,5,5,pending
+6,6,6,in_transit
+7,7,7,delivered
+8,8,8,pending
+9,9,9,pending
+10,10,10,delivered

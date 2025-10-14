@@ -10,20 +10,21 @@
 import 'dotenv/config';
 import app from './server';
 import sequelize from './config/database';
-// import { runAllSeeders } from './seeders';
 import { env } from './config/env';
+import { runAllSeeders } from './seeders/runAllSeeders';
+
 
 (async () => {
   try {
-    console.log('🔍 Validating environment configuration...');
+    // console.log('🔍 Validating environment configuration...');
     // env is already validated in env.ts, no need for an extra function.
 
     console.log('🔌 Connecting to the database...');
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
 
-    console.log('🛠️ Syncing models...');
-    await sequelize.sync({ alter: false }); // use { force: true } for full reset (careful!)
+    // console.log('🛠️ Syncing models...');
+    // await sequelize.sync({ alter: false }); // use { force: true } for full reset (careful!)
 
     // console.log('🌱 Running seeders...');
     // await runAllSeeders();
