@@ -6,7 +6,55 @@ import { authenticateJWT, authorizeRoles } from '../../middlewares/auth.middlewa
 const router = Router();
 
 /**
- * @openapi
+ * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         code:
+ *           type: string
+ *           example: P001
+ *         name:
+ *           type: string
+ *           example: Box
+ *         description:
+ *           type: string
+ *           example: Cardboard box
+ *         stock:
+ *           type: integer
+ *           example: 100
+ *         isDeleted:
+ *           type: boolean
+ *           example: false
+ *       required:
+ *         - code
+ *         - name
+ *         - description
+ *         - stock
+ *     CreateProduct:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: string
+ *           example: P011
+ *         name:
+ *           type: string
+ *           example: New Product
+ *         description:
+ *           type: string
+ *           example: Product description
+ *         stock:
+ *           type: integer
+ *           example: 10
+ *       required:
+ *         - code
+ *         - name
+ *         - description
+ *         - stock
  * /products:
  *   get:
  *     tags:
@@ -25,7 +73,7 @@ const router = Router();
 router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductController.getAll);
 
 /**
- * @openapi
+ * @swagger
  * /products/{code}:
  *   get:
  *     tags:
@@ -47,10 +95,9 @@ router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductCont
  *       404:
  *         description: Product not found
  */
-router.get('/:codigo', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductController.getByCode);
-
+router.get('/:code', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductController.getByCode);
 /**
- * @openapi
+ * @swagger
  * /products:
  *   post:
  *     tags:
@@ -61,17 +108,35 @@ router.get('/:codigo', authenticateJWT, authorizeRoles('admin', 'analyst'), Prod
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             type: object
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 example: P011
+ *               name:
+ *                 type: string
+ *                 example: New Product
+ *               description:
+ *                 type: string
+ *                 example: Product description
+ *               stock:
+ *                 type: integer
+ *                 example: 10
+ *             required:
+ *               - code
+ *               - name
+ *               - description
+ *               - stock
  *     responses:
  *       201:
  *         description: Product created
  *       400:
  *         description: Validation error
  */
-router.post('/', ProductController.create);
+router.post('/', authenticateJWT, authorizeRoles('admin'), ProductController.create);
 
 /**
- * @openapi
+ * @swagger
  * /products/{code}:
  *   delete:
  *     tags:
@@ -89,6 +154,6 @@ router.post('/', ProductController.create);
  *       404:
  *         description: Product not found
  */
-router.delete('/:codigo', authenticateJWT, authorizeRoles('admin'), ProductController.delete);
+router.delete('/:code', authenticateJWT, authorizeRoles('admin'), ProductController.delete);
 
 export default router;

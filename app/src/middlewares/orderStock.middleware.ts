@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Product } from '../modules/product/product.model';
 import { Warehouse } from '../modules/warehouse/warehouse.model';
+import { WarehouseProduct } from '../modules/warehouse/warehouseProduct.model';
 
 export const checkOrderStock = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -14,8 +15,13 @@ export const checkOrderStock = async (req: Request, res: Response, next: NextFun
       if (!product) {
         return res.status(400).json({ message: `Product with id ${item.productId} not found` });
       }
-      if (product.stock < item.quantity) {
-        return res.status(400).json({ message: `Insufficient stock for product ${product.name}` });
+
+      const wp = await WarehouseProduct.findOne({ where: { productId: item.productId, warehouseId }, });
+      if (!wp) {
+        return res.status(400).json({ message: `Product ${product.name} not available in warehouse ${warehouseId}` });
+      }
+      if (wp.stock < item.quantity) {
+        return res.status(400).json({ message: `Insufficient stock for product ${product.name} in warehouse ${warehouseId}` });
       }
     }
 
