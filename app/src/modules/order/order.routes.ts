@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { OrderController } from './order.controller';
+import { checkOrderStock } from '../../middlewares/orderStock.middleware';
+import { authenticateJWT, authorizeRoles } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -69,7 +71,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/', OrderController.getAll);
+router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), OrderController.getAll);
 
 /**
  * @swagger
@@ -113,7 +115,7 @@ router.get('/', OrderController.getAll);
  *       400:
  *         description: Validation error (e.g. insufficient stock, invalid client/warehouse/product)
  */
-router.post('/', OrderController.create);
+router.post('/', authenticateJWT, authorizeRoles('admin'), checkOrderStock, OrderController.create);
 
 /**
  * @swagger
@@ -147,7 +149,7 @@ router.post('/', OrderController.create);
  *       404:
  *         description: Order not found
  */
-router.patch('/status', OrderController.updateStatus);
+router.patch('/status', authenticateJWT, authorizeRoles('admin', 'analyst'), OrderController.updateStatus);
 
 /**
  * @swagger
@@ -176,6 +178,6 @@ router.patch('/status', OrderController.updateStatus);
  *       404:
  *         description: Client not found
  */
-router.get('/client/:clientId', OrderController.getByClient);
+router.get('/client/:clientId', authenticateJWT, authorizeRoles('admin', 'analyst'), OrderController.getByClient);
 
 export default router;

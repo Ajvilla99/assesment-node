@@ -1,9 +1,9 @@
 export interface CreateWarehouseDTO {
-  nombre: string;
-  activa?: boolean;
+  name: string;
+  isActive?: boolean;
 }
 
 export interface UpdateWarehouseStatusDTO {
   id: number;
-  activa: boolean;
+  isActive: boolean;
 }

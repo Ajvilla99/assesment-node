@@ -3,14 +3,14 @@ import swaggerUi from 'swagger-ui-express';
 import { env } from './env';
 import { Express } from 'express';
 
-// Configuración base de Swagger
+// Swagger base configuration
 const options: swaggerJSDoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Example',
+      title: 'FHL Logistics Delivery Orders API',
       version: '1.0.0',
-      description: 'REST API built with Express, TypeScript, Sequelize, and PostgreSQL',
+      description: 'REST API built with Express, TypeScript, Sequelize, and PostgreSQL for managing delivery orders, clients, warehouses, and products.',
     },
     servers: [
       {
@@ -18,14 +18,28 @@ const options: swaggerJSDoc.Options = {
         description: 'Development server',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  // Aquí se definen los archivos donde Swagger buscará las rutas documentadas
+  // Files where Swagger will look for documented routes
   apis: ['src/modules/**/*.routes.ts', 'src/modules/**/*.controller.ts'],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
 
-// Helper para cargar Swagger en la app
+// Helper to load Swagger in the app
 export const setupSwagger = (app: Express) => {
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };

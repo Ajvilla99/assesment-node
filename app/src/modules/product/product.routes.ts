@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as service from './product.service';
+import { ProductController } from './product.controller';
+import { authenticateJWT, authorizeRoles } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -20,10 +22,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Product'
  */
-router.get('/', async (req, res) => {
-  const products = await service.getAllProducts();
-  res.json(products);
-});
+router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductController.getAll);
 
 /**
  * @openapi
@@ -48,11 +47,7 @@ router.get('/', async (req, res) => {
  *       404:
  *         description: Product not found
  */
-router.get('/:codigo', async (req, res) => {
-  const product = await service.getProductByCodigo(req.params.codigo);
-  if (!product) return res.status(404).json({ message: 'Product not found' });
-  res.json(product);
-});
+router.get('/:codigo', authenticateJWT, authorizeRoles('admin', 'analyst'), ProductController.getByCode);
 
 /**
  * @openapi
@@ -73,14 +68,7 @@ router.get('/:codigo', async (req, res) => {
  *       400:
  *         description: Validation error
  */
-router.post('/', async (req, res) => {
-  try {
-    const product = await service.createProduct(req.body);
-    res.status(201).json(product);
-  } catch (err: any) {
-    res.status(400).json({ message: err.message });
-  }
-});
+router.post('/', ProductController.create);
 
 /**
  * @openapi
@@ -101,13 +89,6 @@ router.post('/', async (req, res) => {
  *       404:
  *         description: Product not found
  */
-router.delete('/:codigo', async (req, res) => {
-  try {
-    const deleted = await service.deleteProduct(req.params.codigo);
-    res.json(deleted);
-  } catch (err: any) {
-    res.status(404).json({ message: err.message });
-  }
-});
+router.delete('/:codigo', authenticateJWT, authorizeRoles('admin'), ProductController.delete);
 
 export default router;

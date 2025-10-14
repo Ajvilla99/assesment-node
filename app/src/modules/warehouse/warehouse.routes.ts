@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import * as service from './warehouse.service';
+import { WarehouseController } from './warehouse.controller';
+import { authenticateJWT, authorizeRoles } from '../../middlewares/auth.middleware';
+
+
 
 const router = Router();
 
 /**
- * @openapi
+ * @swagger
  * /warehouses:
  *   get:
  *     tags:
@@ -20,13 +23,10 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Warehouse'
  */
-router.get('/', async (req, res) => {
-  const warehouses = await service.getAllWarehouses();
-  res.json(warehouses);
-});
+router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), WarehouseController.getAll);
 
 /**
- * @openapi
+ * @swagger
  * /warehouses:
  *   post:
  *     tags:
@@ -44,17 +44,10 @@ router.get('/', async (req, res) => {
  *       400:
  *         description: Validation error
  */
-router.post('/', async (req, res) => {
-  try {
-    const warehouse = await service.createWarehouse(req.body);
-    res.status(201).json(warehouse);
-  } catch (err: any) {
-    res.status(400).json({ message: err.message });
-  }
-});
+router.post('/', WarehouseController.create);
 
 /**
- * @openapi
+ * @swagger
  * /warehouses/status:
  *   patch:
  *     tags:
@@ -77,13 +70,6 @@ router.post('/', async (req, res) => {
  *       404:
  *         description: Warehouse not found
  */
-router.patch('/status', async (req, res) => {
-  try {
-    const updated = await service.setWarehouseStatus(req.body);
-    res.json(updated);
-  } catch (err: any) {
-    res.status(404).json({ message: err.message });
-  }
-});
+router.patch('/:id/status', authenticateJWT, authorizeRoles('admin'), WarehouseController.setStatus);
 
 export default router;

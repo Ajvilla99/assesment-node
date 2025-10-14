@@ -8,6 +8,8 @@ export const OrderService = {
   },
 
   async getAllOrders() {
+    // Ensure this returns all orders for admin/analyst
+    // If you want to filter by role, do it in the controller or middleware, not here
     return dao.findAllOrders();
   },
 

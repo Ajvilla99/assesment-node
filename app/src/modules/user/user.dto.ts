@@ -7,6 +7,7 @@ export interface RegisterDTO {
   username: string;
   email: string;
   password: string;
+  role?: 'admin' | 'analyst';
 }
 
 export interface AuthResponseDTO {
@@ -16,5 +17,6 @@ export interface AuthResponseDTO {
     id: number;
     username: string;
     email: string;
+    role: string;
   };
 }

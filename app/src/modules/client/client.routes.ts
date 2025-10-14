@@ -1,10 +1,39 @@
 import { Router } from 'express';
 import { ClientController } from './client.controller';
+import { checkUniqueDni } from '../../middlewares/clientUniqueDni.middleware';
+import { authenticateJWT, authorizeRoles } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
 /**
- * @openapi
+ * @swagger
+ * components:
+ *   schemas:
+ *     Client:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         dni:
+ *           type: string
+ *           example: "12345678"
+ *         name:
+ *           type: string
+ *           example: "John Doe"
+ *         email:
+ *           type: string
+ *           example: "john@example.com"
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: "Client already exists"
+ */
+
+/**
+ * @swagger
  * /clients:
  *   get:
  *     tags:
@@ -20,10 +49,10 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Client'
  */
-router.get('/', ClientController.getAll);
+router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ClientController.getAll);
 
 /**
- * @openapi
+ * @swagger
  * /clients/search:
  *   post:
  *     tags:
@@ -52,10 +81,10 @@ router.get('/', ClientController.getAll);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post('/search', ClientController.getByDni);
+router.post('/search', authenticateJWT, authorizeRoles('admin', 'analyst'), ClientController.getByDni);
 
 /**
- * @openapi
+ * @swagger
  * /clients:
  *   post:
  *     tags:
@@ -81,6 +110,6 @@ router.post('/search', ClientController.getByDni);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post('/', ClientController.create);
+router.post('/', authenticateJWT, authorizeRoles('admin'), checkUniqueDni, ClientController.create);
 
 export default router;

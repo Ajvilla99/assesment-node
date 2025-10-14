@@ -28,7 +28,7 @@ export const ClientController = {
 
   async getByDni(req: Request, res: Response) {
     try {
-      const dni = req.params.dni;
+      const dni = req.body.dni || req.params.dni;
       const result = await dao.findClientByDni(dni);
       if (!result) {
         return res.status(404).json({ message: 'Client not found' });

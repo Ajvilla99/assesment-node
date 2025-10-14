@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as dao from './order.dao';
 import { CreateOrderDTO, UpdateOrderStatusDTO } from './order.dto';
+import { OrderService } from './order.service';
 
 export const OrderController = {
   async create(req: Request, res: Response) {
@@ -16,8 +17,8 @@ export const OrderController = {
 
   async getAll(req: Request, res: Response) {
     try {
-      const result = await dao.findAllOrders();
-      res.status(200).json(result);
+      const orders = await OrderService.getAllOrders();
+      res.status(200).json(orders);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }

@@ -50,10 +50,6 @@ const router = Router();
  */
 router.post('/login', AuthController.login);
 
-router.post('/', (req, res) => {
-  res.send('Auth root');
-});
-
 /**
  * @swagger
  * /auth/register:

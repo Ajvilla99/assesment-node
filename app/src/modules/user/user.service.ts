@@ -12,7 +12,12 @@ export const AuthService = {
     const validPassword = await bcrypt.compare(data.password, user.password);
     if (!validPassword) throw new Error('Invalid credentials');
 
-    const token = jwt.sign({ id: user.id }, env.JWT_SECRET, { expiresIn: '1d' });
+    // Include role in the JWT payload
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
     return {
       message: 'Login successful',
@@ -21,6 +26,7 @@ export const AuthService = {
         id: user.id,
         username: user.username,
         email: user.email,
+        role: user.role,
       },
     };
   },
@@ -31,9 +37,14 @@ export const AuthService = {
       username: data.username,
       email: data.email,
       password: hashedPassword,
+      role: data.role || 'analyst',
     });
 
-    const token = jwt.sign({ id: newUser.id }, env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign(
+      { id: newUser.id, role: newUser.role },
+      env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
     return {
       token,
@@ -41,6 +52,7 @@ export const AuthService = {
         id: newUser.id,
         username: newUser.username,
         email: newUser.email,
+        role: newUser.role,
       },
     };
   },

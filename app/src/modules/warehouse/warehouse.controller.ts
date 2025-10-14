@@ -29,8 +29,8 @@ export const WarehouseController = {
       if (!warehouse) {
         return res.status(404).json({ message: 'Warehouse not found' });
       }
-      await dao.updateWarehouseStatus(data.id, data.activa);
-      res.status(200).json({ ...warehouse.toJSON(), activa: data.activa });
+      await dao.updateWarehouseStatus(data.id, data.isActive);
+      res.status(200).json({ ...warehouse.toJSON(), isActive: data.isActive });
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }

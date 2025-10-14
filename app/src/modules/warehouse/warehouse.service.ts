@@ -13,7 +13,7 @@ export const WarehouseService = {
   async setWarehouseStatus(data: UpdateWarehouseStatusDTO) {
     const warehouse = await dao.findWarehouseById(data.id);
     if (!warehouse) throw new Error('Warehouse not found');
-    await dao.updateWarehouseStatus(data.id, data.activa);
-    return { ...warehouse.toJSON(), activa: data.activa };
+    await dao.updateWarehouseStatus(data.id, data.isActive);
+    return { ...warehouse.toJSON(), isActive: data.isActive };
   },
 };

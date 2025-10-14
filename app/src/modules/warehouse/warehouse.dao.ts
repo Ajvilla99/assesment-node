@@ -4,8 +4,8 @@ import { CreateWarehouseDTO } from './warehouse.dto';
 export const createWarehouse = async (data: CreateWarehouseDTO) => {
   // Map only the expected fields for Warehouse.create
   return Warehouse.create({
-    nombre: data.nombre,
-    activa: data.activa
+    name: data.name,
+    activa: data.isActive
   });
 };
 
