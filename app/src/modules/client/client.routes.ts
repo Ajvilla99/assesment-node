@@ -57,7 +57,7 @@ router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ClientContr
  *   post:
  *     tags:
  *       - Clients
- *     summary: Find a client by national ID (cedula)
+ *     summary: Find a client by national ID (dni)
  *     requestBody:
  *       required: true
  *       content:
@@ -65,7 +65,7 @@ router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), ClientContr
  *           schema:
  *             type: object
  *             properties:
- *               cedula:
+ *               dni:
  *                 type: string
  *     responses:
  *       200:

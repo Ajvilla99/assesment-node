@@ -8,6 +8,22 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Warehouse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Bodega Central
+ *         isActive:
+ *           type: boolean
+ *           example: true
+ *       required:
+ *         - name
  * /warehouses:
  *   get:
  *     tags:
@@ -44,7 +60,7 @@ router.get('/', authenticateJWT, authorizeRoles('admin', 'analyst'), WarehouseCo
  *       400:
  *         description: Validation error
  */
-router.post('/', WarehouseController.create);
+router.post('/', authenticateJWT, authorizeRoles('admin'), WarehouseController.create);
 
 /**
  * @swagger
@@ -62,7 +78,7 @@ router.post('/', WarehouseController.create);
  *             properties:
  *               id:
  *                 type: integer
- *               activa:
+ *               isActive:
  *                 type: boolean
  *     responses:
  *       200:

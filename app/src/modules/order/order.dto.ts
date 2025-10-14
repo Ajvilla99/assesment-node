@@ -6,5 +6,5 @@ export interface CreateOrderDTO {
 
 export interface UpdateOrderStatusDTO {
   id: number;
-  status: 'pending' | 'in_comming' | 'delivered';
+  status: 'pending' | 'in_transit' | 'delivered';
 }

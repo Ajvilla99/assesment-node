@@ -14,6 +14,7 @@ import { seedOrders } from './order.seeder';
 import { seedProducts } from './product.seeder';
 import { seedUsers } from './user.seeder';
 import { seedWarehouses } from './warehouse.seeder';
+import { seedWarehouseProducts } from './warehouseProduct.seeder';
 
 /**
  * Runs all seeders in the correct order.
@@ -32,6 +33,7 @@ export const runAllSeeders = async () => {
     await seedClients();
     await seedWarehouses();
     await seedProducts();
+    await seedWarehouseProducts();
     await seedOrders();
     await seedAddresses();
 

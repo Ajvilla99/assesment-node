@@ -58,8 +58,9 @@ This API is designed for FHL Logistics to manage the lifecycle of delivery order
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/fhl-logistics-api.git
-cd fhl-logistics-api
+git clone https://github.com/Ajvilla99/assesment-node
+
+cd assesment-node
 ```
 
 ### Environment Variables

@@ -4,8 +4,8 @@ import { CreateProductDTO } from './product.dto';
 export const createProduct = async (data: CreateProductDTO) => {
   return Product.create({
     code: data.code,
-    nombre: data.nombre,
-    descripcion: data.descripcion,
+    name: data.name,
+    description: data.description,
     stock: data.stock,
   });
 };
@@ -19,5 +19,5 @@ export const findAllProducts = async () => {
 };
 
 export const logicalDeleteProduct = async (code: string) => {
-  return Product.update({ deleted: true }, { where: { code } });
+  return Product.update({ isDeleted: true }, { where: { code } });
 };

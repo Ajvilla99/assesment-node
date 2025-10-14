@@ -5,7 +5,7 @@ export const createWarehouse = async (data: CreateWarehouseDTO) => {
   // Map only the expected fields for Warehouse.create
   return Warehouse.create({
     name: data.name,
-    activa: data.isActive
+    isActive: data.isActive
   });
 };
 
@@ -18,5 +18,5 @@ export const findAllWarehouses = async () => {
 };
 
 export const updateWarehouseStatus = async (id: number, activa: boolean) => {
-  return Warehouse.update({ activa }, { where: { id } });
+  return Warehouse.update({ isActive: activa }, { where: { id } });
 };

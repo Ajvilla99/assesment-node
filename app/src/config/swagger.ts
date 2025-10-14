@@ -41,5 +41,6 @@ export const swaggerSpec = swaggerJSDoc(options);
 
 // Helper to load Swagger in the app
 export const setupSwagger = (app: Express) => {
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  // Mount Swagger UI at /api-docs to match README and common conventions
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };

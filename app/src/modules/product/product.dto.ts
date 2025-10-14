@@ -1,7 +1,7 @@
 export interface CreateProductDTO {
   code: string;
-  nombre: string;
-  descripcion: string;
+  name: string;
+  description: string;
   stock: number;
 }
 
